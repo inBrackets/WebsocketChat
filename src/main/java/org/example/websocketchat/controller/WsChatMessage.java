@@ -1,4 +1,4 @@
-package org.example.websocketchat.chat;
+package org.example.websocketchat.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,10 +11,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ChatMessage {
+public class WsChatMessage {
 
-    private MessageType type;
-    private String content;
     private String sender;
+    private String content;
+    private WsChatMessageType type;
 
 }

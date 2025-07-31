@@ -1,2 +1,7 @@
-package org.example.websocketchat.chat;public class MessageType {
+package org.example.websocketchat.chat;
+
+public enum MessageType {
+    CHAT,
+    JOIN,
+    LEAVE
 }

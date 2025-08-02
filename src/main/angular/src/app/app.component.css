@@ -237,12 +237,22 @@ button.accent {
     width: calc(100% - 85px);
 }
 
-/* Button styling for typing area */
-#typingArea .input-group button {
-    float: left;
-    width: 80px;
-    height: 38px;
+/* Make the input-group a flex container */
+.input-group {
+    display: flex;
+    align-items: center;
+}
+
+/* Style for button container */
+.button-group {
+    display: flex;
+    gap: 5px;
     margin-left: 5px;
+}
+
+/* Adjust input width when two buttons are present */
+#typingArea .input-group input {
+    flex: 1;
 }
 
 /* Chat header styling */
@@ -338,35 +348,6 @@ button.accent {
         transition: background-color 0.3s;
     }
 
-    /* Styling for the blue "Send" button */
-    #typingArea .primary {
-        background-color: #007bff !important;  /* Blue background color */
-        color: white !important;  /* White text color */
-        font-family: 'Arial', sans-serif !important;  /* Font family */
-        font-weight: bold !important;  /* Bold text */
-        border: none;
-        border-radius: 20px;
-        padding: 10px 20px;
-        cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.3s ease-in-out, color 0.3s;
-    }
-
-    #typingArea .primary:hover {
-        background-color: #0056b3 !important;  /* Darker blue on hover */
-        color: #f1f1f1 !important;
-    }
-
-    #typingArea .primary:active {
-        background-color: #003f7f !important;  /* Even darker blue when clicked */
-        color: #e0e0e0 !important;
-    }
-
-    #typingArea .primary:focus {
-        outline: none;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5) !important;  /* Blue glow effect when focused */
-    }
-
     .chat-header {
         padding: 10px;
     }
@@ -378,4 +359,81 @@ button.accent {
     .chat-header h2 {
         font-size: 1.1em;
     }
+    #typingArea .input-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #typingArea .input-group input {
+        width: 100%;
+    }
+
+    #typingArea .button-group {
+        flex-direction: row; /* Buttons side by side */
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 10px; /* Add margin above buttons */
+    }
+
+    #typingArea .button-group button {
+        flex: 1;
+    }
+}
+
+/* Styling for the blue "Send" button */
+#typingArea .primary {
+    background-color: #007bff !important;  /* Blue background color */
+    color: white !important;  /* White text color */
+    font-family: 'Arial', sans-serif !important;  /* Font family */
+    font-weight: bold !important;  /* Bold text */
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease-in-out, color 0.3s;
+}
+
+#typingArea .primary:hover {
+    background-color: #0056b3 !important;  /* Darker blue on hover */
+    color: #f1f1f1 !important;
+}
+
+#typingArea .primary:active {
+    background-color: #003f7f !important;  /* Even darker blue when clicked */
+    color: #e0e0e0 !important;
+}
+
+#typingArea .primary:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5) !important;  /* Blue glow effect when focused */
+}
+
+/* Styling for the red "Error" button */
+#typingArea .error {
+    background-color: #dc3545 !important;  /* Red background */
+    color: white !important;  /* White text */
+    font-family: 'Arial', sans-serif !important;
+    font-weight: bold !important;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease-in-out, color 0.3s;
+}
+
+#typingArea .error:hover {
+    background-color: #c82333 !important;  /* Darker red on hover */
+    color: #f1f1f1 !important;
+}
+
+#typingArea .error:active {
+    background-color: #a71d2a !important;  /* Even darker red on click */
+    color: #e0e0e0 !important;
+}
+
+#typingArea .error:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(220, 53, 69, 0.5) !important;  /* Red glow on focus */
 }

@@ -27,6 +27,9 @@ export class WebsocketService {
     // Configure the STOMP client with connection details
     this.stompClient = new Client({
       webSocketFactory: () => socket,  // Use SockJS as the WebSocket factory
+      connectHeaders: {
+        username: username  // Add custom header
+      },
       reconnectDelay: 5000,  // Reconnect delay if connection is lost
       debug: (str) => console.log(str)  // Log STOMP debug messages for troubleshooting
     });

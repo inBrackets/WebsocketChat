@@ -74,5 +74,11 @@ export class AppComponent implements OnInit {
         return colors[Math.abs(hash % colors.length)];
     }
 
-
+    leaveChat() {
+        this.websocketService.disconnect();      // Disconnect the WebSocket connection
+        this.messages = [];                      // Clear the chat messages
+        this.username = '';                      // Reset the username input
+        this.isConnected = false;                // Return to username entry page
+        this.connectingMessage = 'Connecting...'; // Reset connecting message if reused
+    }
 }

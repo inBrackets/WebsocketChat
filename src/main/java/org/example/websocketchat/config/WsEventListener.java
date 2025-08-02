@@ -8,7 +8,10 @@ import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.socket.messaging.SessionConnectEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
+
+import java.util.List;
 
 /**
  * Listens for WebSocket-related lifecycle events, such as user disconnections.
@@ -38,14 +41,43 @@ public class WsEventListener {
         String username = (String) headerAccessor.getSessionAttributes().get("username");
         if (username != null) {
             log.info("User disconnected: {} ", username);
-            var message = WsChatMessage.builder()
+            var leaveMessage = WsChatMessage.builder()
                     .type(WsChatMessageType.LEAVE)
                     .sender(username)
                     .build();
-            //pass the message to the broker specific topic : public
+            //pass the leaveMessage to the broker specific topic : public
             // Notifies all connected clients that the user has left
-            messageSendingOperations.convertAndSend("/topic/public", message);
+            messageSendingOperations.convertAndSend("/topic/public", leaveMessage);
         }
+    }
+
+    /**
+     * Called automatically when a new WebSocket connection is established.
+     * Can be used to log or notify other users that someone connected.
+     *
+     * @param event the session connect event triggered when a user connects
+     */
+    @EventListener
+    public void handleWsConnectListener(SessionConnectEvent event) {
+        StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
+
+        // Optional: extract custom headers if the client sends any (e.g., username)
+        String username = headerAccessor.getNativeHeader("username") != null
+                ? headerAccessor.getNativeHeader("username").get(0)
+                : "Anonymous";
+
+        log.info("New WebSocket connection established. Username: {}", username);
+
+        // Optional: store username in session attributes for later use
+        headerAccessor.getSessionAttributes().put("username", username);
+
+        // Optional: send JOIN notification to others
+        WsChatMessage joinMessage = WsChatMessage.builder()
+                .type(WsChatMessageType.JOIN)
+                .sender(username)
+                .build();
+
+        messageSendingOperations.convertAndSend("/topic/public", joinMessage);
     }
 
 

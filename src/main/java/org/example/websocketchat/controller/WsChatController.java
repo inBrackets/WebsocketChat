@@ -15,7 +15,7 @@ public class WsChatController {
     public WsChatMessage sendMessage(@Payload WsChatMessage msg) {
         // Log the sender and content of the message for debugging
         System.out.println("Message received from " + msg.getSender() + ": " + msg.getContent());
-        
+
         // Broadcast the message to all subscribers on the "/topic/public" topic
         return msg;
     }
@@ -25,10 +25,10 @@ public class WsChatController {
     public WsChatMessage addUser(@Payload WsChatMessage msg, SimpMessageHeaderAccessor headerAccessor) {
         // Store the username in the WebSocket session attributes
         headerAccessor.getSessionAttributes().put("username", msg.getSender());
-        
+
         // Log when a user joins the chat
         System.out.println("User joined: " + msg.getSender());
-        
+
         // Broadcast the user join event to all subscribers on the "/topic/chat" topic
         return msg;
     }

@@ -15,24 +15,23 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 @Slf4j
 public class WsEventListener {
 
-        private final SimpMessageSendingOperations messageSendingOperations;
+    private final SimpMessageSendingOperations messageSendingOperations;
 
     @EventListener
-    public void handleWsDisconnectListener( SessionDisconnectEvent event){
+    public void handleWsDisconnectListener(SessionDisconnectEvent event) {
         //To listen to another even, create the another method with NewEvent as argument.
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
         String username = (String) headerAccessor.getSessionAttributes().get("username");
-        if(username !=null){
+        if (username != null) {
             log.info("User disconnected: {} ", username);
             var message = WsChatMessage.builder()
                     .type(WsChatMessageType.LEAVE)
                     .sender(username)
                     .build();
             //pass the message to the broker specific topic : public
-            messageSendingOperations.convertAndSend("/topic/public",message);
+            messageSendingOperations.convertAndSend("/topic/public", message);
         }
     }
-    
 
 
 }

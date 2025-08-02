@@ -10,13 +10,27 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
+/**
+ * Listens for WebSocket-related lifecycle events, such as user disconnections.
+ * <p>
+ * When a user disconnects, this listener broadcasts a LEAVE message to inform others.
+ */
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class WsEventListener {
 
+    /**
+     * Used to send messages to destinations (e.g., topics) over WebSocket.
+     */
     private final SimpMessageSendingOperations messageSendingOperations;
 
+    /**
+     * Called automatically when a user disconnects from the WebSocket session.
+     * Sends a LEAVE message to all subscribers of "/topic/public".
+     *
+     * @param event the session disconnect event triggered by the framework
+     */
     @EventListener
     public void handleWsDisconnectListener(SessionDisconnectEvent event) {
         //To listen to another even, create the another method with NewEvent as argument.
@@ -29,6 +43,7 @@ public class WsEventListener {
                     .sender(username)
                     .build();
             //pass the message to the broker specific topic : public
+            // Notifies all connected clients that the user has left
             messageSendingOperations.convertAndSend("/topic/public", message);
         }
     }

@@ -86,20 +86,6 @@ button.default {
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.12);
 }
 
-/* Primary button style */
-button.primary {
-    background-color: #6db33f;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.12);
-    color: #fff;
-}
-
-/* Accent button style */
-button.accent {
-    background-color: #6db33f;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.12);
-    color: #fff;
-}
-
 /* Username page styling */
 #username-page {
     text-align: center;
@@ -381,7 +367,7 @@ button.accent {
 }
 
 /* Styling for the blue "Send" button */
-#typingArea .primary {
+#typingArea .primary, button.primary, button.accent {
     background-color: #007bff !important;  /* Blue background color */
     color: white !important;  /* White text color */
     font-family: 'Arial', sans-serif !important;  /* Font family */
